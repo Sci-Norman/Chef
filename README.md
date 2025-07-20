@@ -1,3 +1,5 @@
+Live website link: https://norman-kitchen.vercel.app/
+
 # 👨‍🍳 Chef's Friend – AI Recipe Assistant
 
 **Chef's Friend** is an AI-powered cooking assistant built with React + Vite. Just type in ingredients you have, and the app will suggest a full recipe and even embed a related YouTube video!
