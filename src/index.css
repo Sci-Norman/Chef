@@ -6,10 +6,10 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  overflow: hidden;
+  height: 100%;
   font-family: sans-serif;
   background-color: #fff;
+  overflow: auto;
 }
 
 /* Header */
@@ -21,7 +21,6 @@ html, body {
   gap: 0.5rem;
   padding: 1rem;
   width: 100%;
-  min-height: 100px;
   background-color: #f5f5f5;
 }
 
@@ -36,19 +35,20 @@ html, body {
   text-align: center;
 }
 
-/* Main layout */
+/* Main layout: side by side by default */
 .split-main {
   display: flex;
-  height: calc(100vh - 120px);
+  flex-direction: row;
   width: 100%;
+  height: calc(100vh - 120px);
 }
 
 /* Panes */
-.left-pane, .right-pane {
+.left-pane,
+.right-pane {
   flex: 1;
   padding: 1rem;
   overflow-y: auto;
-  max-height: calc(100vh - 120px);
 }
 
 /* Form */
@@ -88,14 +88,15 @@ html, body {
   margin-top: 1rem;
 }
 
-/* Responsive Design */
-
-/* Mobile (small devices) */
+/* 📱 Mobile: single column stack, scrollable full height */
 @media (max-width: 600px) {
+  html, body {
+    height: auto;
+  }
+
   .total {
     gap: 0.5rem;
-    padding: 0.5rem;
-    min-height: 90px;
+    padding: 0.75rem;
   }
 
   .image {
@@ -108,43 +109,33 @@ html, body {
 
   .split-main {
     flex-direction: column;
-    height: calc(100vh - 100px);
+    height: auto; /* allow scrolling */
   }
 
   .left-pane,
   .right-pane {
-    flex: none;
     width: 100%;
-    max-height: 50%;
+    height: auto;
+    max-height: none;
     padding: 0.75rem;
   }
 }
 
-/* Tablet (medium devices) */
+/* Tablet tweaks */
 @media (max-width: 900px) and (min-width: 601px) {
   .split-main {
     flex-direction: column;
-    height: calc(100vh - 110px);
+    height: auto;
   }
 
   .left-pane,
   .right-pane {
-    flex: none;
     width: 100%;
-    max-height: 50%;
-    padding: 1rem;
-  }
-
-  .heading {
-    font-size: 1.4rem;
-  }
-
-  .image {
-    width: 70px;
+    max-height: none;
   }
 }
 
-/* Recipe output video */
+/* Video output styling */
 .recipe-output iframe {
   margin-top: 1rem;
   border-radius: 12px;
