@@ -1,71 +1,70 @@
+/* Global resets */
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100vh;
   overflow: hidden;
+  font-family: sans-serif;
+  background-color: #fff;
 }
 
-/* Header: vertical layout with larger icon */
+/* Header */
 .total {
   display: flex;
-  flex-direction: column; /* Stack icon and text vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
   width: 100%;
-  min-height: 100px; /* Adjust for larger icon */
+  min-height: 100px;
   background-color: #f5f5f5;
 }
 
-/* Larger chef icon */
 .image {
-  width: 80px; /* Increased size */
+  width: 80px;
   height: auto;
 }
 
-/* Header text */
 .heading {
   margin: 0;
   font-size: 1.5rem;
   text-align: center;
 }
 
-/* Main layout: side-by-side panes */
+/* Main layout */
 .split-main {
   display: flex;
-  height: calc(100vh - 120px); /* Subtract header height */
+  height: calc(100vh - 120px);
   width: 100%;
 }
 
-/* Left pane: scrollable for many ingredients */
-.left-pane {
+/* Panes */
+.left-pane, .right-pane {
   flex: 1;
   padding: 1rem;
-  overflow-y: auto; /* Enable scrolling */
-  max-height: calc(100vh - 120px); /* Match main height */
-}
-
-/* Right pane: scrollable for recipe */
-.right-pane {
-  flex: 1;
-  padding: 1rem;
-  overflow-y: auto; /* Enable scrolling */
+  overflow-y: auto;
   max-height: calc(100vh - 120px);
 }
 
-/* Form: input and button side-by-side */
+/* Form */
 .add-ingredient-form {
   display: flex;
-  flex-direction: row; /* Button beside input */
+  flex-direction: row;
   gap: 0.5rem;
   margin-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .input-box {
-  flex: 1; /* Input takes available space */
+  flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
+  min-width: 150px;
 }
 
 .button {
@@ -89,16 +88,18 @@ html, body {
   margin-top: 1rem;
 }
 
-/* Responsive design: stack panes vertically on mobile */
+/* Responsive Design */
+
+/* Mobile (small devices) */
 @media (max-width: 600px) {
   .total {
     gap: 0.5rem;
     padding: 0.5rem;
-    min-height: 100px;
+    min-height: 90px;
   }
 
   .image {
-    width: 60px; /* Slightly smaller on mobile */
+    width: 60px;
   }
 
   .heading {
@@ -110,12 +111,40 @@ html, body {
     height: calc(100vh - 100px);
   }
 
-  .left-pane, .right-pane {
+  .left-pane,
+  .right-pane {
     flex: none;
     width: 100%;
-    max-height: 50%; /* Split height on mobile */
+    max-height: 50%;
+    padding: 0.75rem;
   }
 }
+
+/* Tablet (medium devices) */
+@media (max-width: 900px) and (min-width: 601px) {
+  .split-main {
+    flex-direction: column;
+    height: calc(100vh - 110px);
+  }
+
+  .left-pane,
+  .right-pane {
+    flex: none;
+    width: 100%;
+    max-height: 50%;
+    padding: 1rem;
+  }
+
+  .heading {
+    font-size: 1.4rem;
+  }
+
+  .image {
+    width: 70px;
+  }
+}
+
+/* Recipe output video */
 .recipe-output iframe {
   margin-top: 1rem;
   border-radius: 12px;
