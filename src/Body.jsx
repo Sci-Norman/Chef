@@ -37,7 +37,7 @@ export default function Body() {
                         name="ingredient"
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
-                        placeholder="e.g. oregano"
+                        placeholder="Add more than one ingredient"
                         aria-label="Add more than one ingredient"
                     />
                     <button className="button">Add ingredient</button>
