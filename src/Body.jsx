@@ -1,6 +1,6 @@
 import React from "react";
 import IngredientsList from "./components/IngredientsList";
-import ChefRecipe from "./components/chefRecipe";
+import ChefRecipe from "./components/ChefRecipe";
 import { getRecipeFromMistral } from "./ai.js";
 
 export default function Body() {
