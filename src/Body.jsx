@@ -40,7 +40,7 @@ export default function Body() {
                         placeholder="e.g. oregano"
                         aria-label="Add ingredient"
                     />
-                    <button className="button">Add ingredient</button>
+                    <button className="button">Add more than one ingredient</button>
                 </form>
                 <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
                 {loading && (
