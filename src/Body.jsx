@@ -38,9 +38,9 @@ export default function Body() {
                         value={inputValue}
                         onChange={e => setInputValue(e.target.value)}
                         placeholder="e.g. oregano"
-                        aria-label="Add ingredient"
+                        aria-label="Add more than one ingredient"
                     />
-                    <button className="button">Add more than one ingredient</button>
+                    <button className="button">Add ingredient</button>
                 </form>
                 <IngredientsList ingredients={ingredients} getRecipe={getRecipe} />
                 {loading && (
