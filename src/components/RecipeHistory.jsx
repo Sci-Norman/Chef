@@ -28,7 +28,7 @@ export default function RecipeHistory({ history, onSelectRecipe, onClearHistory 
               className={`action-btn ${showFavoritesOnly ? '' : 'secondary'}`}
               onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
             >
-              {showFavoritesOnly ? '❤️ Favorites Only' : 'Show All'}
+              {showFavoritesOnly ? 'Favorites Only' : 'Show All'}
             </button>
             {history.length > 0 && (
               <button className="action-btn secondary" onClick={onClearHistory}>

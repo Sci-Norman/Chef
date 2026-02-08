@@ -68,13 +68,13 @@ export default function ChefRecipe({
 
             <div className="recipe-actions">
                 <button className="action-btn" onClick={handleCopy}>
-                    📋 Copy
+                    Copy
                 </button>
                 <button className="action-btn" onClick={handleShare}>
-                    📤 Share
+                    Share
                 </button>
                 <button className="action-btn" onClick={onGetAnother}>
-                    🔄 Get Another Recipe
+                    Get Another Recipe
                 </button>
                 {copyConfirmation && (
                     <span className="copy-confirmation">{copyConfirmation}</span>

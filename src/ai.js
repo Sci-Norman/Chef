@@ -10,16 +10,20 @@ IMPORTANT: Do NOT include any YouTube links, iframe embeds, or video URLs. Inste
 
 const hfAccessToken = import.meta.env.VITE_HF_ACCESS_TOKEN;
 if (!hfAccessToken) {
-  throw new Error("HuggingFace access token is missing. Please set VITE_HF_ACCESS_TOKEN in your .env file.");
+  console.error("Hugging Face access token is missing. Please set VITE_HF_ACCESS_TOKEN in your .env file.");
 }
 
-const hf = new HfInference(hfAccessToken);
+const hf = hfAccessToken ? new HfInference(hfAccessToken) : null;
 
 /**
  * Chat-style function
  * Uses Qwen2.5-7B-Instruct — currently active on HF free inference
  */
 export async function getRecipeChat(ingredientsArr, options = {}, retries = 3) {
+  if (!hf) {
+    return "Error: Unable to generate recipe. Please check your configuration and try again.";
+  }
+  
   const { dietaryPreferences = [], cuisineType = 'Any' } = options;
   const ingredientsString = ingredientsArr.join(", ");
   
