@@ -6,6 +6,7 @@ import Body from "./Body";
 export default function App() {
   const [darkMode, setDarkMode] = React.useState(() => {
     const saved = localStorage.getItem('chef-dark-mode');
+    // Default to light mode (false) if no saved preference exists
     return saved === 'true';
   });
 
