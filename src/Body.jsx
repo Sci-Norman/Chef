@@ -251,7 +251,7 @@ export default function Body() {
         </div>
 
         <footer className="dashboard-footer">
-          Made with ❤️ by Norman's Kitchen
+          Made with love by Norman's Kitchen
         </footer>
       </div>
 

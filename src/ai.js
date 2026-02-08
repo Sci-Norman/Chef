@@ -10,7 +10,7 @@ IMPORTANT: Do NOT include any YouTube links, iframe embeds, or video URLs. Inste
 
 const hfAccessToken = import.meta.env.VITE_HF_ACCESS_TOKEN;
 if (!hfAccessToken) {
-  console.error("HuggingFace access token is missing. Please set VITE_HF_ACCESS_TOKEN in your .env file.");
+  console.error("Hugging Face access token is missing. Please set VITE_HF_ACCESS_TOKEN in your .env file.");
 }
 
 const hf = hfAccessToken ? new HfInference(hfAccessToken) : null;
@@ -21,7 +21,7 @@ const hf = hfAccessToken ? new HfInference(hfAccessToken) : null;
  */
 export async function getRecipeChat(ingredientsArr, options = {}, retries = 3) {
   if (!hf) {
-    return "Error: HuggingFace access token is missing. Please set VITE_HF_ACCESS_TOKEN in your .env file.";
+    return "Error: Unable to generate recipe. Please check your configuration and try again.";
   }
   
   const { dietaryPreferences = [], cuisineType = 'Any' } = options;
