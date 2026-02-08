@@ -19,15 +19,27 @@ const hf = new HfInference(hfAccessToken);
  * Chat-style function
  * Uses Qwen2.5-7B-Instruct — currently active on HF free inference
  */
-export async function getRecipeChat(ingredientsArr, retries = 3) {
+export async function getRecipeChat(ingredientsArr, options = {}, retries = 3) {
+  const { dietaryPreferences = [], cuisineType = 'Any' } = options;
   const ingredientsString = ingredientsArr.join(", ");
+  
+  let userMessage = `I have ${ingredientsString}. Please give me a recipe!`;
+  
+  if (dietaryPreferences.length > 0) {
+    userMessage += ` Dietary preferences: ${dietaryPreferences.join(', ')}.`;
+  }
+  
+  if (cuisineType && cuisineType !== 'Any') {
+    userMessage += ` Cuisine style: ${cuisineType}.`;
+  }
+  
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await hf.chatCompletion({
         model: "Qwen/Qwen2.5-7B-Instruct",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: `I have ${ingredientsString}. Please give me a recipe!` },
+          { role: "user", content: userMessage },
         ],
         max_tokens: 1024,
         temperature: 0.7,
