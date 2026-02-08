@@ -30,7 +30,8 @@ export default function Body() {
   // Auto-scroll to recipe on mobile after recipe generation
   React.useEffect(() => {
     if (recipe && !loading && recipeRef.current) {
-      const isMobile = window.innerWidth <= 900; // Match tablet/mobile breakpoint
+      // Use matchMedia for proper responsive detection
+      const isMobile = window.matchMedia('(max-width: 900px)').matches;
       if (isMobile) {
         setTimeout(() => {
           recipeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
