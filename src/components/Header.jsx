@@ -2,11 +2,18 @@
 import chef from "../assets/chef.png"; // Correct path
 import "../index.css";
 
-function Header() {
+function Header({ darkMode, setDarkMode }) {
     return (
         <div className="total">
            <img className="image" src={chef} alt="chef icon" />
             <h2 className="heading">Norman's Kitchen</h2>
+            <button 
+                className="dark-mode-toggle" 
+                onClick={() => setDarkMode(!darkMode)}
+                aria-label="Toggle dark mode"
+            >
+                {darkMode ? '☀️' : '🌙'}
+            </button>
         </div>
     );
 }
