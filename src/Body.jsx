@@ -20,7 +20,6 @@ export default function Body() {
     return saved ? JSON.parse(saved) : [];
   });
   const [currentRecipeId, setCurrentRecipeId] = React.useState(null);
-  const [viewMode, setViewMode] = React.useState('dashboard'); // 'dashboard' or 'split'
   const recipeRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -42,7 +41,6 @@ export default function Body() {
 
   async function getRecipe() {
     setLoading(true);
-    setViewMode('split'); // Switch to split view when generating recipe
     try {
       // ✅ Call the correct function, passing only ingredient names
       const ingredientNames = ingredients.map(ing => ing.name);
@@ -112,7 +110,6 @@ export default function Body() {
   function selectHistoryRecipe(historyItem) {
     setRecipe(historyItem.recipe);
     setCurrentRecipeId(historyItem.id);
-    setViewMode('split'); // Switch to split view when selecting a recipe
   }
 
   function clearHistory() {
@@ -120,25 +117,22 @@ export default function Body() {
       setRecipeHistory([]);
       setRecipe("");
       setCurrentRecipeId(null);
-      setViewMode('dashboard'); // Return to dashboard
     }
   }
 
-  function backToDashboard() {
-    setViewMode('dashboard');
+  function clearRecipe() {
     setRecipe("");
     setCurrentRecipeId(null);
   }
 
   const currentRecipe = recipeHistory.find(item => item.id === currentRecipeId);
 
-  // Dashboard Mode: Full-width centered layout
-  if (viewMode === 'dashboard') {
-    return (
-      <main className="dashboard-container">
+  return (
+    <main className={`unified-container ${recipe ? 'has-recipe' : ''}`}>
+      <div className="dashboard-section">
         <div className="dashboard-content">
           <div className="dashboard-card hero-card">
-            <h1 className="dashboard-title">🍳 Welcome to Norman's Kitchen</h1>
+            <h1 className="dashboard-title">Welcome to Norman's Kitchen</h1>
             <p className="dashboard-subtitle">Let's cook something amazing together!</p>
             
             <form onSubmit={handleSubmit} className="dashboard-form">
@@ -153,7 +147,6 @@ export default function Body() {
                     value={inputValue}
                     onChange={e => setInputValue(e.target.value)}
                     placeholder="e.g., chicken, rice, tomatoes..."
-                    aria-label="Add ingredient"
                   />
                   <button className="button add-btn" type="submit">
                     <span className="btn-icon">+</span> Add
@@ -172,7 +165,6 @@ export default function Body() {
                       <button
                         className="chip-remove"
                         onClick={() => removeIngredient(ingredient.id)}
-                        aria-label={`Remove ${ingredient.name}`}
                       >
                         ✕
                       </button>
@@ -189,7 +181,7 @@ export default function Body() {
 
             <div className="preferences-row">
               <div className="preference-section">
-                <h3>🥗 Dietary Preferences</h3>
+                <h3>Dietary Preferences</h3>
                 <div className="dietary-chips">
                   {DIETARY_OPTIONS.map(pref => (
                     <button
@@ -204,7 +196,7 @@ export default function Body() {
               </div>
 
               <div className="preference-section">
-                <h3>🌍 Cuisine Style</h3>
+                <h3>Cuisine Style</h3>
                 <select 
                   className="cuisine-select"
                   value={cuisineType} 
@@ -230,7 +222,7 @@ export default function Body() {
                     </>
                   ) : (
                     <>
-                      ✨ Generate Recipe
+                      Generate Recipe
                     </>
                   )}
                 </button>
@@ -240,7 +232,7 @@ export default function Body() {
 
           {recipeHistory.length > 0 && (
             <div className="dashboard-card history-card">
-              <h2 className="section-title">📖 Recipe History</h2>
+              <h2 className="section-title">Recipe History</h2>
               <RecipeHistory 
                 history={recipeHistory}
                 onSelectRecipe={selectHistoryRecipe}
@@ -261,93 +253,38 @@ export default function Body() {
         <footer className="dashboard-footer">
           Made with ❤️ by Norman's Kitchen
         </footer>
-      </main>
-    );
-  }
+      </div>
 
-  // Split View Mode: Traditional split pane with recipe
-  return (
-    <main className={`split-main ${viewMode === 'split' ? 'split-view-active' : ''}`}>
-      <div className="left-pane">
-        <button className="back-to-dashboard-btn" onClick={backToDashboard}>
-          ← Back to Dashboard
-        </button>
-
-        <form onSubmit={handleSubmit} className="add-ingredient-form">
-          <input
-            className="input-box"
-            type="text"
-            name="ingredient"
-            value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
-            placeholder="Add more ingredients"
-            aria-label="Add more ingredient"
-          />
-          <button className="button">Add</button>
-        </form>
-        
-        <IngredientsList 
-          ingredients={ingredients} 
-          getRecipe={getRecipe} 
-          removeIngredient={removeIngredient} 
-        />
-
-        <div className="dietary-preferences">
-          <h3>Dietary Preferences</h3>
-          <div className="dietary-chips">
-            {DIETARY_OPTIONS.map(pref => (
-              <button
-                key={pref}
-                className={`dietary-chip ${dietaryPreferences.includes(pref) ? 'active' : ''}`}
-                onClick={() => toggleDietaryPreference(pref)}
-              >
-                {pref}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="cuisine-selector">
-          <h3>Cuisine Style</h3>
-          <select 
-            value={cuisineType} 
-            onChange={(e) => setCuisineType(e.target.value)}
-          >
-            {CUISINE_OPTIONS.map(cuisine => (
-              <option key={cuisine} value={cuisine}>{cuisine}</option>
-            ))}
-          </select>
-        </div>
-
-        {loading && (
-          <div className="spinner-container" aria-live="polite">
-            <div className="cooking-spinner">
-              <span className="cooking-emoji">👨‍🍳</span>
-              <span className="cooking-emoji">🥘</span>
-              <span className="cooking-emoji">🔥</span>
+      {(recipe || loading) && (
+        <div className="recipe-section" ref={recipeRef}>
+          {loading && (
+            <div className="spinner-container" aria-live="polite">
+              <div className="cooking-spinner">
+                <span className="cooking-emoji">👨‍🍳</span>
+                <span className="cooking-emoji">🥘</span>
+                <span className="cooking-emoji">🔥</span>
+              </div>
+              <span className="loading-text">Crafting your perfect recipe...</span>
             </div>
-            <span className="loading-text">Crafting your perfect recipe...</span>
-          </div>
-        )}
-
-        <RecipeHistory 
-          history={recipeHistory}
-          onSelectRecipe={selectHistoryRecipe}
-          onClearHistory={clearHistory}
-        />
-      </div>
-      <div className="right-pane" ref={recipeRef}>
-        {recipe && !loading && (
-          <ChefRecipe 
-            recipe={recipe} 
-            onGetAnother={getRecipe}
-            rating={currentRecipe?.rating || 0}
-            isFavorite={currentRecipe?.isFavorite || false}
-            onRatingChange={updateRecipeRating}
-            onFavoriteToggle={toggleRecipeFavorite}
-          />
-        )}
-      </div>
+          )}
+          
+          {recipe && !loading && (
+            <>
+              <button className="back-to-full-view-btn" onClick={clearRecipe}>
+                Back to full view
+              </button>
+              <ChefRecipe 
+                recipe={recipe} 
+                onGetAnother={getRecipe}
+                rating={currentRecipe?.rating || 0}
+                isFavorite={currentRecipe?.isFavorite || false}
+                onRatingChange={updateRecipeRating}
+                onFavoriteToggle={toggleRecipeFavorite}
+              />
+            </>
+          )}
+        </div>
+      )}
     </main>
   );
 }
