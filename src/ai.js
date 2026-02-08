@@ -1,7 +1,11 @@
 import { HfInference } from "@huggingface/inference";
 
 const SYSTEM_PROMPT = `
-You are a culinary assistant that receives a list of ingredients and suggests a recipe using some or all of them. Keep extras minimal. At the end, recommend a YouTube video with an iframe embed. Format in markdown.
+You are a culinary assistant that receives a list of ingredients and suggests a recipe using some or all of them. Keep extras minimal. Format the recipe in markdown.
+
+IMPORTANT: Do NOT include any YouTube links, iframe embeds, or video URLs. Instead, at the end of your recipe, suggest a YouTube search term the user can look up themselves, formatted like this:
+
+**🎥 YouTube Search Suggestion:** Search for "[recipe name] recipe tutorial" on YouTube for a video walkthrough.
 `;
 
 const hfAccessToken = import.meta.env.VITE_HF_ACCESS_TOKEN;
@@ -12,15 +16,15 @@ if (!hfAccessToken) {
 const hf = new HfInference(hfAccessToken);
 
 /**
- * Chat-style GPT function
- * Uses a chat-ready model like Zephyr
+ * Chat-style function
+ * Uses Qwen2.5-7B-Instruct — currently active on HF free inference
  */
 export async function getRecipeChat(ingredientsArr, retries = 3) {
   const ingredientsString = ingredientsArr.join(", ");
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await hf.chatCompletion({
-        model: "HuggingFaceH4/zephyr-7b-beta", // ✅ chat-ready model
+        model: "Qwen/Qwen2.5-7B-Instruct",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: `I have ${ingredientsString}. Please give me a recipe!` },
@@ -47,7 +51,7 @@ export async function getRecipeText(ingredientsArr, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await hf.textGeneration({
-        model: "tiiuae/falcon-40b-instruct", // ✅ supported text-generation model
+        model: "Qwen/Qwen2.5-7B-Instruct",
         inputs: prompt,
         parameters: {
           max_new_tokens: 512,

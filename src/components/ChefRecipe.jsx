@@ -8,10 +8,24 @@ export default function ChefRecipe({ recipe }) {
         <section className="suggested-recipe-container" aria-live="polite">
             <h2>Norman's Kitchen Recommends:</h2>
             <ReactMarkdown
-                children={recipe}
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw]}
-            />
+                components={{
+                    iframe: ({ node, ...props }) => (
+                        <iframe
+                            {...props}
+                            style={{
+                                maxWidth: "100%",
+                                border: "none",
+                                borderRadius: "8px",
+                                marginTop: "1rem",
+                            }}
+                        />
+                    ),
+                }}
+            >
+                {recipe}
+            </ReactMarkdown>
         </section>
     );
 }
