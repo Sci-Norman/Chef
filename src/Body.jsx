@@ -147,6 +147,7 @@ export default function Body() {
                     value={inputValue}
                     onChange={e => setInputValue(e.target.value)}
                     placeholder="e.g., chicken, rice, tomatoes..."
+                    aria-label="Add ingredient"
                   />
                   <button className="button add-btn" type="submit">
                     <span className="btn-icon">+</span> Add
@@ -165,6 +166,7 @@ export default function Body() {
                       <button
                         className="chip-remove"
                         onClick={() => removeIngredient(ingredient.id)}
+                        aria-label={`Remove ${ingredient.name}`}
                       >
                         ✕
                       </button>
