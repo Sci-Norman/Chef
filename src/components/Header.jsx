@@ -1,5 +1,5 @@
 
-import chef from "../assets/chef.png"; // Correct path
+import chef from "../assets/chef.svg"; // Correct path
 import "../index.css";
 
 function Header({ darkMode, setDarkMode }) {
