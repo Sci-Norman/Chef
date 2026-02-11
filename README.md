@@ -2,17 +2,17 @@ Live website link: https://norman-kitchen.vercel.app/
 
 # 👨‍🍳 Chef's Friend – AI Recipe Assistant
 
-**Chef's Friend** is an AI-powered cooking assistant built with React + Vite. Just type in ingredients you have, and the app will suggest a full recipe and even embed a related YouTube video!
+**Chef's Friend** is an AI-powered cooking assistant built with React + Vite. Add ingredients you already have, and the app generates a full recipe in markdown with optional cuisine and dietary preferences.
 
 ---
 
 ## 🚀 Features
 
-- ✅ Add ingredients and get a full AI-generated recipe
-- 🎥 Embedded YouTube cooking video from AI suggestions
-- 📝 Markdown rendering of AI text using `react-markdown`
-- 💨 Fast dev server with Vite
-- 🎨 Styled with Tailwind CSS
+- ✅ Add ingredients and generate an AI recipe
+- 🧭 Choose dietary preferences and cuisine style
+- 📝 Markdown recipe rendering via `react-markdown`
+- 🕘 Recipe history with favorites and star ratings
+- 🌓 Dark mode support with persisted preferences
 
 ---
 
@@ -20,9 +20,9 @@ Live website link: https://norman-kitchen.vercel.app/
 
 - React
 - Vite
-- Tailwind CSS
-- React Markdown + Rehype Raw
-- OpenAI (or Mistral AI for recipe generation)
+- Plain CSS (custom theme variables)
+- React Markdown + Remark GFM
+- Hugging Face Inference API
 
 ---
 
@@ -38,7 +38,7 @@ cd chefs-friend
 2. **Install dependencies**
 
 ```bash
-pnpm install
+npm install
 ```
 
 3. **Configure Environment Variables**
@@ -46,13 +46,13 @@ pnpm install
 Create a `.env` file in the root:
 
 ```env
-VITE_API_KEY=your-api-key-here
+VITE_HF_ACCESS_TOKEN=your-access-token-here
 ```
 
 4. **Run the development server**
 
 ```bash
-pnpm run dev
+npm run dev
 ```
 
 Visit: `http://localhost:5173`
@@ -61,16 +61,15 @@ Visit: `http://localhost:5173`
 
 ## 🔧 Project Structure
 
-```
+```text
 src/
-│
 ├── components/
-│   ├── IngredientsList.jsx
 │   ├── ChefRecipe.jsx
-│
-├── ai.js  ← handles AI call to Mistral/OpenAI
+│   ├── Header.jsx
+│   ├── RecipeHistory.jsx
+├── ai.js
 ├── Body.jsx
-├── App.jsx
+└── App.jsx
 ```
 
 ---
@@ -79,29 +78,15 @@ src/
 
 Make sure `.env` is **not committed to Git**. Add this to your `.gitignore`:
 
-```
+```text
 .env
-```
-
----
-
-## ✨ Demo (Example Output)
-
-```
-Ingredients: rice, chicken, kale
-
-AI Recipe:
-Cook the rice...
-Add the chicken...
-
-[Embedded YouTube video]
 ```
 
 ---
 
 ## 💡 Credits
 
-- AI Recipe by [Mistral AI](https://mistral.ai) / OpenAI
+- AI recipe generation powered by [Hugging Face](https://huggingface.co/)
 - UI by Norman 🙌
 
 ---

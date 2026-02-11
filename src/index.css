@@ -795,6 +795,8 @@ html, body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
+  text-align: left;
+  width: 100%;
   box-shadow: var(--shadow-sm);
 }
 
@@ -994,17 +996,33 @@ html, body {
   color: var(--text-color);
 }
 
-.star {
+.star-button {
   font-size: 1.8rem;
   cursor: pointer;
   transition: all 0.2s;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
 }
 
-.star:hover {
+.star-button:hover {
   filter: drop-shadow(0 4px 8px rgba(255, 193, 7, 0.5));
 }
 
+
+.star-button {
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.star-button:focus-visible,
+.favorite-btn:focus-visible,
+.history-item:focus-visible,
+.toggle-history-btn:focus-visible,
+.action-btn:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+}
 .favorite-btn {
   font-size: 1.8rem;
   background: none;
@@ -1060,6 +1078,8 @@ html, body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s;
+  text-align: left;
+  width: 100%;
   box-shadow: var(--shadow-sm);
 }
 
