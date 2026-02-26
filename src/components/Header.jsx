@@ -6,7 +6,7 @@ function Header({ darkMode, setDarkMode }) {
     return (
         <div className="total">
            <img className="image" src={chef} alt="chef icon" />
-            <h2 className="heading">Norman's Kitchen</h2>
+            <h2 className="heading">Millie's Kitchen</h2>
             <button 
                 className="dark-mode-toggle" 
                 onClick={() => setDarkMode(!darkMode)}
